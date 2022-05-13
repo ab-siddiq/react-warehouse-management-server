@@ -37,6 +37,16 @@ async function run(){
             const result = await stockCollection.deleteOne(query);
             res.send(result);
         })
+
+        //update stock
+
+        app.get('/stock/:id', async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await stockCollection.findOne(query);
+            res.send(result);
+        })
+
     }finally{
 
     }
