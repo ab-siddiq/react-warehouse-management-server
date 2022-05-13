@@ -40,6 +40,18 @@ async function run(){
 
         //update stock
 
+        app.put('/stock/:id', async(req,res)=>{
+            const id = req.params.id;
+            const updateStock = req.body;
+            const filter = {_id: ObjectId(id)};
+            const options = {upsert:true};
+            const updatedDoc = {
+                $set: {updateStock}
+            }
+            const result = await stockCollection.updateOne(filter,updatedDoc,options);
+            res.send(result);
+        })
+
         app.get('/stock/:id', async(req,res)=>{
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
