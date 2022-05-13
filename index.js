@@ -31,10 +31,10 @@ async function run(){
         })
 
         //delete stock
-        app.delete('/stock/:id',(req,res)=>{
+        app.delete('/stock/:id', async(req,res)=>{
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
-            const result = await stocks.deleteOne(query);
+            const result = await stockCollection.deleteOne(query);
             res.send(result);
         })
     }finally{
