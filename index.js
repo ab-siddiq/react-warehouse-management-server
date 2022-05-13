@@ -34,7 +34,7 @@ async function run(){
         app.delete('/stock/:id',(req,res)=>{
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
-            const result = await.stocks(query);
+            const result = await stocks.deleteOne(query);
             res.send(result);
         })
     }finally{
