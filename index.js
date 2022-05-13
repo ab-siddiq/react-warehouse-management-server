@@ -46,7 +46,17 @@ async function run(){
             const filter = {_id: ObjectId(id)};
             const options = {upsert:true};
             const updatedDoc = {
-                $set: {updateStock}
+                $set: {
+                     stockDate : updateStock.stockDate,
+                     productPhotoUrl:updateStock.productPhotoUrl,
+                     productDescription: updateStock.productDescription,
+                     productSupplier: updateStock.productSupplier,
+                     productName: updateStock.productName,
+                     productCategory: updateStock.productCategory,
+                     productQuantity: updateStock.productQuantity,
+                     productUnitPrice: updateStock.productUnitPrice,
+                     productTotalPric: updateStock.productTotalPrice
+                }
             }
             const result = await stockCollection.updateOne(filter,updatedDoc,options);
             res.send(result);
