@@ -7,10 +7,14 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 require('dotenv').config();
-//
+
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ogcfk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ogcfk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ogcfk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = "mongodb+srv://dpm:LjzrRpQ9n4KYVQcc@cluster0.ogcfk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+
+
 
 async function run(){
     try{
@@ -63,6 +67,28 @@ async function run(){
         })
 
         app.get('/stock/:id', async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await stockCollection.findOne(query);
+            res.send(result);
+        })
+        //update inventory
+
+        app.put('/inventory/:id', async(req,res)=>{
+            const id = req.params.id;
+            const updateInventory = req.body;
+            const filter = {_id: ObjectId(id)};
+            const options = {upsert:true};
+            const updatedDoc = {
+                $set: {
+                     productQuantity: updateStock.productQuantity,
+                }
+            }
+            const result = await stockCollection.updateOne(filter,updatedDoc,options);
+            res.send(result);
+        })
+
+        app.get('/inventory/:id', async(req,res)=>{
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
             const result = await stockCollection.findOne(query);
