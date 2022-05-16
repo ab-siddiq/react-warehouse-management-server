@@ -59,7 +59,7 @@ async function run(){
                      productCategory: updateStock.productCategory,
                      productQuantity: updateStock.productQuantity,
                      productUnitPrice: updateStock.productUnitPrice,
-                     productTotalPric: updateStock.productTotalPrice
+                     productTotalPrice: updateStock.productTotalPrice
                 }
             }
             const result = await stockCollection.updateOne(filter,updatedDoc,options);
@@ -81,7 +81,7 @@ async function run(){
             const options = {upsert:true};
             const updatedDoc = {
                 $set: {
-                     productQuantity: updateStock.productQuantity,
+                     productQuantity: updateInventory.productQuantity,
                 }
             }
             const result = await stockCollection.updateOne(filter,updatedDoc,options);
